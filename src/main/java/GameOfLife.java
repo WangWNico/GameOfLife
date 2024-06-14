@@ -142,6 +142,11 @@ public class GameOfLife {
         String outFile = args[1];
         int steps = Integer.parseInt(args[2]);
 
+        if (steps < 1) {
+            System.out.println("The number of steps must be greater than 0.");
+            return;
+        }
+
         GameOfLife game = new GameOfLife(0, 0);
         try {
             game.loadSeed(seedFile);
