@@ -3,15 +3,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  * The GameOfLife class represents the game of life simulation.
  * It allows loading a seed file, simulating the game for a given number of steps,
  * and saving the grid state after each step.
+ * @author Nico Wang
  */
 public class GameOfLife {
     private int rows;
