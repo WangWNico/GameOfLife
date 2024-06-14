@@ -41,6 +41,7 @@ public class GameOfLife {
         this.grid = new int[rows][columns];
 
         int row = 0;
+        // Read each line of the seed file and initialize the grid
         while ((line = reader.readLine()) != null) {
             String[] cells = line.split(", ");
             for (int col = 0; col < columns; col++) {
@@ -72,23 +73,29 @@ public class GameOfLife {
     }
 
     /**
-     * Simulates the game for the specified number of steps.
+     * Simulates the game for the specified number of steps and saves the grid state after each step.
      *
-     * @param steps the number of steps to simulate
+     * @param steps   the number of steps to simulate
+     * @param outFile the name of the output file
      */
     public void simulate(int steps, String outFile) {
         for (int tick = 1; tick <= steps; tick++) {
             int[][] nextGeneration = new int[rows][columns];
+            // Calculate the next generation for each cell
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < columns; col++) {
                     int liveNeighbors = countLiveNeighbors(row, col);
                     if (grid[row][col] == 1) {
+                        // Any live cell with fewer than two live neighbors dies, as if by underpopulation.
+                        // Any live cell with two or three live neighbors lives on to the next generation.
+                        // Any live cell with more than three live neighbors dies, as if by overpopulation.
                         if (liveNeighbors < 2 || liveNeighbors > 3) {
                             nextGeneration[row][col] = 0;
                         } else {
                             nextGeneration[row][col] = 1;
                         }
                     } else {
+                        // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
                         if (liveNeighbors == 3) {
                             nextGeneration[row][col] = 1;
                         } else {
@@ -115,6 +122,7 @@ public class GameOfLife {
      */
     private int countLiveNeighbors(int row, int col) {
         int count = 0;
+        // Check all the eight neighbors around the cell
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 int neighborRow = (row + i + rows) % rows;
